@@ -1,0 +1,31 @@
+command /prefix <player> <text>:
+	aliases: pprex
+	permission: prefix.set
+	usage: &7[&aPre&2&lX&7] &cCorrect Usage: /prefix <player> <prefix>
+	trigger:
+		set {prefix::%arg-1's uuid%} to colored arg-2
+		send "&7[&aPre&2&lX&7] &aSet &2%arg-1%'s &aprefix to &r%arg-2% &ain context &eglobal&a."
+		
+command /suffix <player> <text>:
+	aliases: sprex
+	permission: suffix.set
+	usage: &7[&aPre&2&lX&7] &cCorrect Usage: /suffix <player> <suffix>
+	trigger:
+		set {suffix::%arg-1's uuid%} to colored arg-2
+		send "&7[&aPre&2&lX&7] &aSet &2%arg-1%'s &asuffix to &r%arg-2% &ain context &eglobal&a."	
+
+on chat:
+	if {suffix::%player's uuid%} is set:
+		if {prefix::%player's uuid%} is set:
+			cancel event
+			send "%{prefix::%player's uuid%}% &f%player% %{suffix::%player's uuid%}%&f: &f%message%" to all players	
+	else if {suffix::%player's uuid%} is set:
+		cancel event
+		send "&f%player% %{suffix::%player's uuid%}%&f: &f%message%" to all players
+	else if {prefix::%player's uuid%} is set:
+		cancel event
+		send "%{prefix::%player's uuid%}% %player%&f: &f%message%"
+
+
+		
+		
